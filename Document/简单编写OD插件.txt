@@ -1,0 +1,105 @@
+简单编写OD插件（附prince's TracKid源码）
+
+OllyDbg是一个超强的WIN32调试器，相信大家都熟悉得不能再熟悉了，这里就不多说了。她提供
+
+的插件接口给无数喜爱她的FANS带来了极大的方便，常用的OD隐藏插件、内存DUMP插件等更是脱壳必备。
+
+看着各种插件的推陈出新，大家有没有想过自己写一个属于自己的插件，实现给OD增加自己想要的功能呢
+
+？如果答案是肯定的话，其实很简单，看了本文之后你就可以轻松地写出属于你自己的插件了。
+
+首先到OllyDbg的网站(http://home.t-online.de/home/ollydbg/)上下载OD的API手册OllyDbg
+
+Plugin API v1.10，仔细阅读。如果你英文足够好的话，OK，看到这里就可以了，剩下的去看OD的API手
+
+册足够了，从那里你可以获得你想要的任何东西！ :)
+
+如果你懒得看英文，那我们继续。
+
+准备工作，设置编译器。打开VC++6.0新建一个Win32 Dynamic-Link Library工程，把Plugin.h
+
+头文件加到工程中来，在.cpp文件中include Plugin.h头文件。然后ALT+F7打开Project->Settings,在
+
+C/C++选项卡的最下面Project Options里加上“/J”（没有引号），就是将缺省的char类型设置为
+
+unsigned（Set default char type to unsigned）。把OllyDbg.lib文件加到Resource Files里面。在编
+
+译链接过程中出现LNK2001错误可将Plugin.h头文件中的API函数名称前加下划线"_"即可。
+
+在OD的Plugin API手册里面Plugin callback functions目录里可以看到如下说明：
+Plugin interface includes several callback functions. OllyDbg calls them to install
+
+or remove plugin and on important events, like selected menu item or pressed shortcut key.
+
+Only two callback are mandatory: ODBG_Plugindata and ODBG_Plugininit, all other are
+
+optional. Don't forget to export your callbacks!
+
+看到了吗？只有ODBG_Plugindata和ODBG_Plugininit这两个函数是必需的(mandatory)，也就是
+
+编写OD插件的必要元素：
+
+int ODBG_Plugindata(char *shortname);
+
+shortname - 32个字节的字符指针，buffer内容为我们要编写的插件名称，此名称用来显示在OD
+
+的插件菜单里面。
+
+int ODBG_Plugininit(int ollydbgversion,HWND hw,ulong *features);
+
+ollydbgversion - 看名字就知道了，OD的版本号；
+
+hw - OD主窗口的句柄；
+
+features - 保留。
+
+在你的程序中编写完这两个回调函数，你就可以在OD的插件菜单里看到你自己的插件的名称了。
+
+接下来编写插件的子菜单的显示。同样编写回调函数ODBG_Pluginmenu:
+
+ODBG_Pluginmenu(int origin,char data[4096],void *item);
+
+origin - 调用该回调函数的窗口编号。具体值请参考API手册，举例来说，PM_MAIN，子菜单显
+
+示在主窗口的插件菜单中，PM_DISASM, 子菜单显示在反汇编窗口中...
+
+data - 子菜单显示的字符串，具体格式请参考API手册；
+
+item - 指向窗口中显示的和被选中的数据，可以为NULL。
+
+OK，现在菜单都有了，开始编写我们自己的代码了。回调函数ODBG_Pluginaction帮助我们实现
+
+插件菜单的响应代码：
+
+ODBG_Pluginaction(int origin, int action, void *item)；
+
+origin - 上面介绍过了；
+
+action - 菜单的ID；
+
+item - 同上。
+
+我们在这个回调函数中用switch (action)来分类各个菜单ID并添加响应代码，具体想实现什么
+
+功能，呵呵，完全看你了~
+
+到此，一个最简单的OD插件基本就成型了，这里只是讲OD插件的简单编写方法，其实复杂的东西
+
+也是由简单的、微小的元素按照逻辑堆积而成的，我们知道了基本的编写方法，何愁写不出优秀强大的插
+
+件呢？
+
+这里给出一个简单的例子，小弟胡乱写的一个玩具，OD跟踪记录插件prince's TracKid的VC源码
+
+，就当随便抛个砖头吧，希望能够早日看到各位的"美玉"!
+
+更复杂的例子可以参考Luocong大侠的OD中文字符插件源码。
+
+小弟编程菜鸟，代码混乱，请各位大侠指教。
+
+E-mail: cracker_prince@163.com QQ: 812937
+
+prince 2005.03.02
+
+附件中包含prince's TracKid源码、OllyDbg Plugin API V1.10
+附件:TracKid.rar (bbs.pediy.com/upload/2005/4/files/TracKid.rar_483.rar)
