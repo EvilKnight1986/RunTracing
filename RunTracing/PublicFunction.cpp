@@ -1,6 +1,6 @@
 //*******************************************************************************
 //  
-//  Copyright (c) all 2011 北京锐安 新技术研究 All rights reserved
+//  Copyright (c) all 2011 EvilKnight All rights reserved
 //  FileName : PublicFunction.cpp
 //  D a t e  : 2011.9.8
 //  作   者  : 黄 奇
@@ -426,7 +426,7 @@ BOOL ListExist(list<unsigned int> *pList, unsigned int uValue)
 
 /*******************************************************************************
 *
-*  函 数 名 : ListExist
+*  函 数 名 : RemoveValueByList
 *  功能描述 : 将uAddr0至uAddr1之间的值全部从pList中移除
 *  参数列表 : uAddr0    --  起始值
 *             uAddr1    --  结束值

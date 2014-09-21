@@ -16,7 +16,7 @@
 IMPLEMENT_DYNAMIC(CSettingDialog, CDialog)
 
 CSettingDialog::CSettingDialog(CWnd* pParent /*=NULL*/)
-	: CDialog(CSettingDialog::IDD, pParent)
+        : CDialog(CSettingDialog::IDD, pParent)
     , m_pRunData(NULL)
 {
 
@@ -175,31 +175,31 @@ void CSettingDialog::OnBnClickedOk()
 {
     // TODO: 在此添加控件通知处理程序代码
 
-    if(FALSE == m_RecordDialog.GetUserData(m_pRunData))
-    {
-        return ;
-    }
+        if(FALSE == m_RecordDialog.GetUserData(m_pRunData))
+        {
+                return ;
+        }
 
-    if (FALSE == m_AntiAntiDebugDialog.GetUserData(m_pRunData))
-    {
-        return ;
-    }
+        if (FALSE == m_AntiAntiDebugDialog.GetUserData(m_pRunData))
+        {
+                return ;
+        }
 
-    unsigned long uSize = m_pRunData->uEndAddress - m_pRunData->uStartAddress ;
+        unsigned long uSize = m_pRunData->uEndAddress - m_pRunData->uStartAddress ;
 
     
-    // 先移除所有的断点
-    RemoveAllBreakPoint() ;
+        // 先移除所有的断点
+        RemoveAllBreakPoint() ;
 
-	if(TRUE == ForceSetCallBreakPoint(m_pRunData,
-									m_pRunData->uStartAddress,
-									uSize))
-	{
-		m_pRunData->bIsStart = TRUE ;
-		InitTreeHead(m_pRunData) ;
-	}
+        if(TRUE == ForceSetCallBreakPoint(m_pRunData,
+                                                                        m_pRunData->uStartAddress,
+                                                                        uSize))
+        {
+                m_pRunData->bIsStart = TRUE ;
+                InitTreeHead(m_pRunData) ;
+        }
 
-	/*
+        /*
 
     if (m_pRunData->bIsForceSetBreakPoint)
     {
@@ -218,7 +218,7 @@ void CSettingDialog::OnBnClickedOk()
             m_pRunData->bIsStart = TRUE ;
         }
     }
-	*/
+        */
 
     OnOK();
 }

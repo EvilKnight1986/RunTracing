@@ -1,6 +1,6 @@
 /*******************************************************************************
 *  
-*  Copyright (c) all 2011 北京锐安 新技术研究 All rights reserved
+*  Copyright (c) all 2011 EvilKnight All rights reserved
 *  FileName : PublicFunction.h
 *  D a t e  : 2011.9.8
 *  功   能  : 
